@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Konvolusi Citra{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Aplikasi Konvolusi Citra</h2>
+    <form action="/convolution/" enctype="multipart/form-data" method="post" class="mt-4">
+        <div class="mb-3">
+            <label for="file" class="form-label">Pilih Gambar:</label>
+            <input name="file" type="file" accept="image/*" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="kernel_type" class="form-label">Pilih Jenis Kernel:</label>
+            <select name="kernel_type" class="form-select" required>
+                <option value="sharpen">Sharpen (Penajaman)</option>
+                <option value="average">Average (Blur)</option>
+                <option value="edge">Edge Detection (Deteksi Tepi)</option>
+            </select>
+        </div>
+        <div class="text-center">
+            <input type="submit" value="Aplikasi Konvolusi" class="btn btn-primary"/>
+        </div>
+    </form>
+</div>
+{% endblock %}

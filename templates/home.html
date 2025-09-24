@@ -157,7 +157,6 @@
     
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar -->
             <nav class="col-md-3 col-lg-2 d-md-block sidebar">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
@@ -191,6 +190,36 @@
                                 Histogram Specification
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/convolution/">
+                                <i class="fas fa-filter"></i>
+                                Konvolusi
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/padding/">
+                                <i class="fas fa-border-style"></i>
+                                Zero Padding
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/spatial_filter/">
+                                <i class="fas fa-magic"></i>
+                                Filter Spasial
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/fourier/">
+                                <i class="fas fa-wave-square"></i>
+                                Transformasi Fourier
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/noise_reduction/">
+                                <i class="fas fa-eraser"></i>
+                                Pengurangan Derau
+                            </a>
+                        </li>
                     </ul>
                     
                     <div class="mt-5 px-3">
@@ -203,7 +232,6 @@
                 </div>
             </nav>
 
-            <!-- Main Content -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="container mt-4">
                     <div class="row mb-5">
@@ -283,9 +311,63 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card operation-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <i class="fas fa-filter fa-3x mb-3 text-primary"></i>
+                                    <h3 class="card-title">Konvolusi</h3>
+                                    <p class="card-text">Tingkatkan ketajaman, deteksi tepi, atau blur citra dengan operasi konvolusi.</p>
+                                    <a href="/convolution/" class="btn btn-primary mt-3">Mulai Konvolusi</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card operation-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <i class="fas fa-border-style fa-3x mb-3 text-primary"></i>
+                                    <h3 class="card-title">Zero Padding</h3>
+                                    <p class="card-text">Tambahkan batas hitam di sekeliling gambar untuk mengubah ukurannya.</p>
+                                    <a href="/padding/" class="btn btn-primary mt-3">Tambah Padding</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card operation-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <i class="fas fa-magic fa-3x mb-3 text-primary"></i>
+                                    <h3 class="card-title">Filter Spasial</h3>
+                                    <p class="card-text">Aplikasi filter low, high, dan band pass pada citra.</p>
+                                    <a href="/spatial_filter/" class="btn btn-primary mt-3">Mulai Filtering</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card operation-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <i class="fas fa-wave-square fa-3x mb-3 text-primary"></i>
+                                    <h3 class="card-title">Transformasi Fourier</h3>
+                                    <p class="card-text">Ubah citra dari domain spasial ke domain frekuensi.</p>
+                                    <a href="/fourier/" class="btn btn-primary mt-3">Mulai Transformasi</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card operation-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <i class="fas fa-eraser fa-3x mb-3 text-primary"></i>
+                                    <h3 class="card-title">Pengurangan Derau</h3>
+                                    <p class="card-text">Kurangi derau periodik pada citra menggunakan Transformasi Fourier.</p>
+                                    <a href="/noise_reduction/" class="btn btn-primary mt-3">Kurangi Derau</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Modal untuk Operasi Aritmatika -->
                     <div class="modal fade" id="arithmeticModal" tabindex="-1">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -322,7 +404,6 @@
                         </div>
                     </div>
 
-                    <!-- Modal untuk Operasi Logika -->
                     <div class="modal fade" id="logicModal" tabindex="-1">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">

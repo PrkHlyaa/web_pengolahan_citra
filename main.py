@@ -4,7 +4,7 @@ from fastapi import FastAPI, File, UploadFile, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from skimage.exposure import match_histograms  # pastikan paket scikit-image sudah terinstal
+from skimage.exposure import match_histograms
 
 import numpy as np
 import cv2
@@ -275,3 +275,195 @@ def save_color_histogram(image):
     plt.close()
     return f"/{color_histogram_path}"
 
+# Tambahkan endpoint baru dari kode Colab
+@app.get("/convolution/", response_class=HTMLResponse)
+async def convolution_form(request: Request):
+    return templates.TemplateResponse("convolution.html", {"request": request})
+
+@app.post("/convolution/", response_class=HTMLResponse)
+async def apply_convolution(
+    request: Request,
+    file: UploadFile = File(...),
+    kernel_type: str = Form(...)
+):
+    image_data = await file.read()
+    np_array = np.frombuffer(image_data, np.uint8)
+    img = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
+
+    if kernel_type == "average":
+        kernel = np.ones((3, 3), np.float32) / 9
+    elif kernel_type == "sharpen":
+        kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
+    elif kernel_type == "edge":
+        kernel = np.array([[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]])
+    else:
+        return HTMLResponse("Jenis kernel tidak valid.", status_code=400)
+
+    output_img = cv2.filter2D(img, -1, kernel)
+
+    original_path = save_image(img, "original")
+    modified_path = save_image(output_img, f"{kernel_type}_convolution")
+
+    return templates.TemplateResponse("result.html", {
+        "request": request,
+        "original_image_path": original_path,
+        "modified_image_path": modified_path
+    })
+
+
+@app.get("/padding/", response_class=HTMLResponse)
+async def padding_form(request: Request):
+    return templates.TemplateResponse("padding.html", {"request": request})
+
+@app.post("/padding/", response_class=HTMLResponse)
+async def apply_zero_padding(
+    request: Request,
+    file: UploadFile = File(...),
+    padding_size: int = Form(...)
+):
+    image_data = await file.read()
+    np_array = np.frombuffer(image_data, np.uint8)
+    img = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
+
+    padded_img = cv2.copyMakeBorder(
+        img,
+        padding_size, padding_size, padding_size, padding_size,
+        cv2.BORDER_CONSTANT,
+        value=[0, 0, 0]
+    )
+    
+    original_path = save_image(img, "original")
+    modified_path = save_image(padded_img, "padded")
+
+    return templates.TemplateResponse("result.html", {
+        "request": request,
+        "original_image_path": original_path,
+        "modified_image_path": modified_path
+    })
+
+
+@app.get("/spatial_filter/", response_class=HTMLResponse)
+async def spatial_filter_form(request: Request):
+    return templates.TemplateResponse("spatial_filter.html", {"request": request})
+
+@app.post("/spatial_filter/", response_class=HTMLResponse)
+async def apply_spatial_filter(
+    request: Request,
+    file: UploadFile = File(...),
+    filter_type: str = Form(...)
+):
+    image_data = await file.read()
+    np_array = np.frombuffer(image_data, np.uint8)
+    img = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
+
+    if filter_type == "low":
+        filtered_img = cv2.GaussianBlur(img, (5, 5), 0)
+    elif filter_type == "high":
+        kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
+        filtered_img = cv2.filter2D(img, -1, kernel)
+    elif filter_type == "band":
+        low_pass = cv2.GaussianBlur(img, (9, 9), 0)
+        high_pass = img - low_pass
+        filtered_img = low_pass + high_pass
+    else:
+        return HTMLResponse("Jenis filter tidak valid.", status_code=400)
+
+    original_path = save_image(img, "original")
+    modified_path = save_image(filtered_img, f"{filter_type}_filter")
+
+    return templates.TemplateResponse("result.html", {
+        "request": request,
+        "original_image_path": original_path,
+        "modified_image_path": modified_path
+    })
+
+
+@app.get("/fourier/", response_class=HTMLResponse)
+async def fourier_transform_form(request: Request):
+    return templates.TemplateResponse("fourier_transform.html", {"request": request})
+
+@app.post("/fourier/", response_class=HTMLResponse)
+async def apply_fourier_transform(request: Request, file: UploadFile = File(...)):
+    image_data = await file.read()
+    np_array = np.frombuffer(image_data, np.uint8)
+    img = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
+
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    f = np.fft.fft2(gray)
+    fshift = np.fft.fftshift(f)
+    magnitude_spectrum = 20 * np.log(np.abs(fshift))
+    
+    # Simpan magnitude spectrum sebagai gambar
+    # Normalisasi agar dapat disimpan sebagai gambar
+    magnitude_spectrum = np.uint8(magnitude_spectrum / np.max(magnitude_spectrum) * 255)
+
+    original_path = save_image(img, "original")
+    modified_path = save_image(magnitude_spectrum, "fourier_transform")
+
+    return templates.TemplateResponse("result.html", {
+        "request": request,
+        "original_image_path": original_path,
+        "modified_image_path": modified_path
+    })
+
+
+@app.get("/noise_reduction/", response_class=HTMLResponse)
+async def noise_reduction_form(request: Request):
+    return templates.TemplateResponse("noise_reduction.html", {"request": request})
+
+@app.post("/noise_reduction/", response_class=HTMLResponse)
+async def reduce_periodic_noise(request: Request, file: UploadFile = File(...)):
+    image_data = await file.read()
+    np_array = np.frombuffer(image_data, np.uint8)
+    img = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
+
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    f = np.fft.fft2(gray)
+    fshift = np.fft.fftshift(f)
+
+    rows, cols = gray.shape
+    crow, ccol = rows // 2, cols // 2
+    mask = np.ones((rows, cols), np.uint8)
+    r = 30
+    mask[crow-r:crow+r, ccol-r:ccol+r] = 0
+
+    fshift = fshift * mask
+    f_ishift = np.fft.ifftshift(fshift)
+    img_back = np.fft.ifft2(f_ishift)
+    img_back = np.abs(img_back)
+
+    # Konversi ke format uint8
+    img_back = np.uint8(img_back)
+    
+    original_path = save_image(img, "original")
+    modified_path = save_image(img_back, "noise_reduction")
+
+    return templates.TemplateResponse("result.html", {
+        "request": request,
+        "original_image_path": original_path,
+        "modified_image_path": modified_path
+    })
+
+def save_image(image, prefix):
+    filename = f"{prefix}_{uuid4()}.png"
+    path = os.path.join("static/uploads", filename)
+    cv2.imwrite(path, image)
+    return f"/static/uploads/{filename}"
+
+def save_histogram(image, prefix):
+    histogram_path = f"static/histograms/{prefix}_{uuid4()}.png"
+    plt.figure()
+    plt.hist(image.ravel(), 256, [0, 256])
+    plt.savefig(histogram_path)
+    plt.close()
+    return f"/{histogram_path}"
+
+def save_color_histogram(image):
+    color_histogram_path = f"static/histograms/color_{uuid4()}.png"
+    plt.figure()
+    for i, color in enumerate(['b', 'g', 'r']):
+        hist = cv2.calcHist([image], [i], None, [256], [0, 256])
+        plt.plot(hist, color=color)
+    plt.savefig(color_histogram_path)
+    plt.close()
+    return f"/{color_histogram_path}"
