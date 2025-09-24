@@ -1,0 +1,43 @@
+{% extends "base.html" %} 
+
+{% block title %}Statistik Citra{% endblock %} 
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center">Statistik Citra</h2>
+  <form
+    action="/statistics/"
+    enctype="multipart/form-data"
+    method="post"
+    class="mt-4"
+  >
+    <div class="mb-3">
+      <input
+        name="file"
+        type="file"
+        accept="image/*"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="text-center">
+      <input type="submit" value="Hitung Statistik" class="btn btn-primary" />
+    </div>
+  </form>
+
+  {% if mean_intensity is not none and std_deviation is not none %}
+  <div class="text-center mt-5">
+    <img
+      src="{{ image_path }}"
+      alt="Image for Statistics"
+      class="img-fluid rounded shadow-lg mb-4"
+    />
+    <h4 class="text-center">Rata-rata Intensitas Piksel: {{ mean_intensity }}</h4>
+    <h4 class="text-center">Standar Deviasi (Kontras): {{ std_deviation }}</h4>
+    <div class="text-center mt-4">
+      <a href="/" class="btn btn-secondary">Kembali ke Home</a>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCD 26 Agustus 2024 - POLBAN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #858796;
+            --success-color: #1cc88a;
+            --info-color: #36b9cc;
+            --warning-color: #f6c23e;
+            --danger-color: #e74a3b;
+            --light-color: #f8f9fc;
+            --dark-color: #5a5c69;
+        }
+        
+        body {
+            background-color: #f8f9fc;
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.65rem;
+        }
+        
+        .sidebar {
+            background: linear-gradient(180deg, var(--primary-color) 0%, #224abe 100%);
+            min-height: calc(100vh - 73px);
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .sidebar .nav-link:hover {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar .nav-link.active {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .sidebar .nav-link i {
+            margin-right: 0.5rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 0.35rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-header {
+            background-color: #f8f9fc;
+            border-bottom: 1px solid #e3e6f0;
+            padding: 1rem 1.35rem;
+        }
+        
+        .operation-card {
+            border-left: 4px solid var(--primary-color);
+            transition: transform 0.3s;
+        }
+        
+        .operation-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .grayscale-card {
+            border-left: 4px solid var(--secondary-color);
+            transition: transform 0.3s;
+        }
+        
+        .grayscale-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .histogram-card {
+            border-left: 4px solid var(--info-color);
+            transition: transform 0.3s;
+        }
+        
+        .histogram-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .statistics-card {
+            border-left: 4px solid var(--success-color);
+            transition: transform 0.3s;
+        }
+        
+        .statistics-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #2e59d9;
+            border-color: #2e59d9;
+        }
+        
+        .display-4 {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .lead {
+            color: var(--secondary-color);
+        }
+        
+        .footer {
+            background-color: white;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid #e3e6f0;
+        }
+        
+        .identity-badge {
+            background: linear-gradient(45deg, var(--primary-color), var(--info-color));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.35rem;
+            font-weight: 600;
+            box-shadow: 0 0.15rem 0.5rem rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-image me-2"></i>
+                PCD 26 Agustus 2024 - POLBAN
+            </a>
+            <div class="identity-badge ms-auto">
+                <i class="fas fa-user-graduate me-1"></i> ZAHRA HILYATUL JANNAH - 231524031
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">
+                                <i class="fas fa-home"></i>
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/grayscale/">
+                                <i class="fas fa-moon"></i>
+                                Grayscale
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/histogram/">
+                                <i class="fas fa-chart-bar"></i>
+                                Histogram
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/equalize/">
+                                <i class="fas fa-chart-line"></i>
+                                Histogram Equalization
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/specify/">
+                                <i class="fas fa-balance-scale"></i>
+                                Histogram Specification
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <div class="mt-5 px-3">
+                        <div class="text-white">
+                            <p class="small">Dosen Praktikum:</p>
+                            <h6 class="mb-1">Rizqi (MR)</h6>
+                            <h6>Trisna (TG)</h6>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="container mt-4">
+                    <div class="row mb-5">
+                        <div class="col-12 text-center">
+                            <h1 class="display-4 mb-3">Pengolahan Citra Digital</h1>
+                            <p class="lead">Aplikasi web untuk melakukan berbagai operasi pengolahan citra menggunakan FastAPI dan OpenCV</p>
+                        </div>
+                    </div>
+
+                    <div class="row g-4 mb-5">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card operation-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <i class="fas fa-calculator fa-3x mb-3 text-primary"></i>
+                                    <h3 class="card-title">Operasi Aritmatika</h3>
+                                    <p class="card-text">Lakukan operasi aritmatika seperti penambahan, pengurangan, maksimum, minimum, dan inverse.</p>
+                                    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#arithmeticModal">
+                                        Mulai Operasi
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card operation-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <i class="fas fa-code-branch fa-3x mb-3 text-primary"></i>
+                                    <h3 class="card-title">Operasi Logika</h3>
+                                    <p class="card-text">Lakukan operasi logika seperti AND, OR, XOR, NOT, dan blending antara dua gambar.</p>
+                                    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#logicModal">
+                                        Mulai Operasi
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card grayscale-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <i class="fas fa-moon fa-3x mb-3 text-secondary"></i>
+                                    <h3 class="card-title">Konversi Grayscale</h3>
+                                    <p class="card-text">Konversi gambar berwarna menjadi grayscale untuk analisis lebih lanjut.</p>
+                                    <a href="/grayscale/" class="btn btn-primary mt-3">Konversi Sekarang</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card histogram-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <i class="fas fa-chart-bar fa-3x mb-3 text-info"></i>
+                                    <h3 class="card-title">Analisis Histogram</h3>
+                                    <p class="card-text">Generate histogram grayscale dan berwarna untuk analisis distribusi intensitas pixel.</p>
+                                    <a href="/histogram/" class="btn btn-primary mt-3">Analisis Histogram</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card histogram-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <i class="fas fa-chart-line fa-3x mb-3 text-info"></i>
+                                    <h3 class="card-title">Histogram Equalization</h3>
+                                    <p class="card-text">Tingkatkan kontras gambar menggunakan teknik histogram equalization.</p>
+                                    <a href="/equalize/" class="btn btn-primary mt-3">Equalisasi</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card statistics-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <i class="fas fa-calculator fa-3x mb-3 text-success"></i>
+                                    <h3 class="card-title">Statistik Citra</h3>
+                                    <p class="card-text">Hitung rata-rata intensitas pixel dan standar deviasi untuk analisis kuantitatif.</p>
+                                    <a href="/statistics/" class="btn btn-primary mt-3">Hitung Statistik</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal untuk Operasi Aritmatika -->
+                    <div class="modal fade" id="arithmeticModal" tabindex="-1">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Operasi Aritmatika pada Citra</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/operation/" enctype="multipart/form-data" method="post">
+                                        <div class="mb-3">
+                                            <label class="form-label">Pilih Gambar:</label>
+                                            <input name="file" type="file" accept="image/*" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Pilih Operasi:</label>
+                                            <select name="operation" class="form-select" required>
+                                                <option value="add">Tambah</option>
+                                                <option value="subtract">Kurang</option>
+                                                <option value="max">Max</option>
+                                                <option value="min">Min</option>
+                                                <option value="inverse">Inverse</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Nilai Operasi: <span id="valueOutput">50</span></label>
+                                            <input type="range" class="form-range" min="0" max="100" step="1" name="value" id="value" value="50">
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary">Lakukan Operasi</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal untuk Operasi Logika -->
+                    <div class="modal fade" id="logicModal" tabindex="-1">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Operasi Logika pada Citra</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/logic_operation/" enctype="multipart/form-data" method="post">
+                                        <div class="mb-3">
+                                            <label class="form-label">Pilih Gambar 1:</label>
+                                            <input name="file1" type="file" accept="image/*" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Pilih Gambar 2 (Untuk operasi AND dan XOR):</label>
+                                            <input name="file2" type="file" accept="image/*" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Pilih Operasi:</label>
+                                            <select name="operation" class="form-select" required>
+                                                <option value="not">NOT</option>
+                                                <option value="and">AND</option>
+                                                <option value="xor">XOR</option>
+                                            </select>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary">Lakukan Operasi Logika</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <footer class="footer text-center">
+                    <div class="container">
+                        <span class="text-muted">© 2024 Pengolahan Citra Digital - ZAHRA HILYATUL JANNAH (231524031) - POLBAN</span>
+                    </div>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Script untuk menampilkan nilai slider
+        const slider = document.getElementById("value");
+        const output = document.getElementById("valueOutput");
+        if (slider && output) {
+            slider.addEventListener("input", function() {
+                output.textContent = slider.value;
+            });
+        }
+    </script>
+</body>
+</html>
